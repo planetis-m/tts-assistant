@@ -75,9 +75,8 @@ You decide where `<break>` goes.
 - Keep a heading only if it adds real spoken meaning and sounds natural aloud.
 - Prefer shorter spoken sentences. If a sentence sounds dense or awkward, rewrite
   it into two shorter natural sentences before chunking.
-- If a chunk is short and flows naturally with the next one, merge them.
 - If a chunk is too long, split first at sentence boundaries.
-- If it is still too long, split at commas, semicolons, or other clause breaks.
+- Split inside a sentence only as a last resort.
 - Keep chunks conservative for Kokoro-82M:
   - target about `260-420` characters
   - preferred upper bound `520`
