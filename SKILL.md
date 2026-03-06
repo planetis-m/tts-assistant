@@ -73,13 +73,15 @@ You decide where `<break>` goes.
 - Headings are optional source hints, not mandatory spoken content.
 - Drop generic headings that do not improve the listening experience.
 - Keep a heading only if it adds real spoken meaning and sounds natural aloud.
+- Prefer shorter spoken sentences. If a sentence sounds dense or awkward, rewrite
+  it into two shorter natural sentences before chunking.
 - If a chunk is short and flows naturally with the next one, merge them.
 - If a chunk is too long, split first at sentence boundaries.
 - If it is still too long, split at commas, semicolons, or other clause breaks.
 - Keep chunks conservative for Kokoro-82M:
-  - target about `180-320` characters
-  - preferred upper bound `340`
-  - hard ceiling `380`
+  - target about `260-420` characters
+  - preferred upper bound `520`
+  - hard ceiling `620`
 - Never emit empty chunks.
 - Collapse repeated `<break>` markers.
 
