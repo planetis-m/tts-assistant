@@ -19,6 +19,9 @@ This skill is text-only.
 
 Always preprocess the text yourself before running `chunktts`.
 
+- Do not use custom scripts or programmatic pipelines to generate the cleaned TTS
+  input text. Read the source directly and rewrite it manually for speech.
+
 ### Installation
 
 - Check with `command -v chunktts`.
