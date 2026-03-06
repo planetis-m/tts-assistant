@@ -7,7 +7,7 @@ pleasant speech audio with `chunktts`.
 
 It provides one workflow:
 - rewrites symbol-heavy or markdown-heavy text into natural spoken text
-- inserts `<break>` markers at speech-friendly boundaries
+- inserts `<bk>` markers at speech-friendly boundaries
 - runs `chunktts`
 - returns one final `.opus` file and its location
 

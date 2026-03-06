@@ -69,7 +69,7 @@ Rewrite for natural speech, not visual fidelity.
 
 ## Chunking
 
-You decide where `<break>` goes.
+You decide where `<bk>` goes.
 
 - Chunk by spoken thought units, not document structure.
 - Use whole paragraphs and list items as the default units.
@@ -85,10 +85,10 @@ You decide where `<break>` goes.
   - preferred upper bound `520`
   - hard ceiling `620`
 - Never emit empty chunks.
-- Collapse repeated `<break>` markers.
+- Collapse repeated `<bk>` markers.
 
 ## Produce Output
 
-- Write the cleaned text with `<break>` markers to a temporary input file.
+- Write the cleaned text with `<bk>` markers to a temporary input file.
 - Run `chunktts` with that file and an agent-managed `.opus` output path.
 - Tell the user the exact location of the generated `.opus` file.
