@@ -3,9 +3,9 @@
 Use this only when `command -v chunktts` fails.
 
 Path policy:
-- Use absolute user paths only (`$HOME/.local/...`).
+- Install only to absolute user-space paths such as `$HOME/.local/...`.
 - Never install into a relative workspace path such as `./.local/...`.
-- Never create `.local` under the current project directory.
+- Never create `.local` inside the current project directory.
 
 Release page:
 - `https://github.com/planetis-m/chunktts/releases/latest`
@@ -59,16 +59,16 @@ chunktts --help | Out-Null
 
 ## DeepInfra API key configuration
 
-`chunktts` requires an API key. After installation, present these instructions to
-the user before generating audio.
+`chunktts` requires an API key. After installation, give the user these
+instructions before generating audio.
 
 **Recommended: environment variable**
 Linux/macOS: `export DEEPINFRA_API_KEY="your_api_key"`
 Windows PowerShell: `$env:DEEPINFRA_API_KEY = "your_api_key"`
 
 **Alternative: update config.json**
-Create or edit `config.json` inside the directory where the real binary lives
-and set:
+Create or edit `config.json` in the directory where the real binary lives and
+set:
 ```json
 {
   "api_key": "your_deepinfra_api_key"
@@ -80,7 +80,7 @@ and set:
 - Keep `config.json` and any bundled runtime libraries with the real binary.
 - Do not copy only `chunktts`/`chunktts.exe` into another directory without its
   bundled runtime files.
-- Ensure install targets are under user home (`$HOME/.local` or `%USERPROFILE%\.local`),
-  not the current workspace.
-- If install fails due to permission or sandbox restrictions, request escalated
-  permission and retry.
+- Keep install targets under user home (`$HOME/.local` or `%USERPROFILE%\.local`),
+  not in the current workspace.
+- If installation fails because of permission or sandbox restrictions, request
+  escalated permission and retry.
