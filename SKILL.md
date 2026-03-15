@@ -69,8 +69,9 @@ You decide where `<bk>` goes.
 - Treat headings as optional hints, not mandatory spoken content.
 - Drop generic headings that do not improve the listening experience.
 - Keep a heading only if it adds real spoken meaning and sounds natural aloud.
-- Prefer shorter spoken sentences. If one sounds dense or awkward, rewrite it into
-  two shorter natural sentences before chunking.
+- Prefer shorter spoken sentences for delivery, not less content. Do not summarize,
+  compress, or compact a passage to fit a chunk. If one sounds dense or awkward,
+  rewrite it into two shorter natural sentences before chunking.
 - If a paragraph or list item is too long, split it first at sentence boundaries.
 - Split inside a sentence only as a last resort.
 - Keep chunks conservative for Kokoro-82M:
