@@ -19,6 +19,9 @@ chunktts INPUT.txt OUTPUT.opus
   binary or missing runtime dependency, and retry.
 - After installing `chunktts`, tell the user how to configure
   `DEEPINFRA_API_KEY` or `config.json` before generating audio.
+
+## Execution
+
 - Request unrestricted network or escalated execution directly when running
   `chunktts`. Do not run a sandboxed network probe first.
 - Do not inspect environment variables, shell profiles, or filesystem files to
