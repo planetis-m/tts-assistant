@@ -1,14 +1,19 @@
 # chunktts Install Fallback
 
-Use this only when `command -v chunktts` fails.
+Use this when `chunktts` is missing or fails to start.
 
-Path policy:
-- Install only to absolute user-space paths such as `$HOME/.local/...`.
-- Never install into a relative workspace path such as `./.local/...`.
-- Never create `.local` inside the current project directory.
+Install only under the user's home directory, never inside the current
+workspace.
 
-Release page:
-- `https://github.com/planetis-m/chunktts/releases/latest`
+Supported release assets:
+- Linux `x86_64`
+- macOS `arm64`
+- Windows `x86_64`
+
+Runtime dependencies:
+- Linux: install `libcurl` and `libsndfile` through the system package manager.
+- macOS: run `brew install curl libsndfile`.
+- Windows: keep the DLLs from the release archive beside `chunktts.exe`.
 
 ## Linux x86_64
 
@@ -57,18 +62,18 @@ $env:Path = "$exeDir;$env:Path"
 chunktts --help | Out-Null
 ```
 
-## DeepInfra API key configuration
+## API Key Setup
 
-`chunktts` requires an API key. After installation, give the user these
-instructions before generating audio.
+After installation, tell the user to configure a DeepInfra API key before
+generating audio.
 
-**Recommended: environment variable**
-Linux/macOS: `export DEEPINFRA_API_KEY="your_api_key"`
-Windows PowerShell: `$env:DEEPINFRA_API_KEY = "your_api_key"`
+Recommended environment variable:
+- Linux/macOS: `export DEEPINFRA_API_KEY="your_api_key"`
+- Windows PowerShell: `$env:DEEPINFRA_API_KEY = "your_api_key"`
 
-**Alternative: update config.json**
-Create or edit `config.json` in the directory where the real binary lives and
-set:
+Alternatively, create `config.json` beside the real binary, for example in
+`~/.local/opt/chunktts/current/`:
+
 ```json
 {
   "api_key": "your_deepinfra_api_key"
@@ -77,10 +82,8 @@ set:
 
 ## Notes
 
-- Keep `config.json` and any bundled runtime libraries with the real binary.
-- Do not copy only `chunktts`/`chunktts.exe` into another directory without its
-  bundled runtime files.
-- Keep install targets under user home (`$HOME/.local` or `%USERPROFILE%\.local`),
-  not in the current workspace.
+- Keep the extracted runtime files with the real binary. Do not copy only
+  `chunktts` or `chunktts.exe` elsewhere.
 - If installation fails because of permission or sandbox restrictions, request
   escalated permission and retry.
+- If platform/architecture is unsupported, stop and ask the user for manual installation steps.

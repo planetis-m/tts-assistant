@@ -1,85 +1,59 @@
 ---
 name: tts-tool
-description: Text-to-speech workflow for turning user-provided text or markdown into pleasant `.opus` audio. Use when text contains symbols, URLs, formulas, markdown, or technical notation that should be rewritten for natural speech before TTS.
+description: Generate a natural-sounding `.opus` audio file from text or markdown. Use when a user wants spoken audio, especially for content with markdown, URLs, formulas, paths, or technical notation that should be rewritten for speech.
 ---
 
 # TTS Tool
 
-Follow this workflow exactly to turn text into natural-sounding `.opus` speech.
+Generate one `.opus` file with:
 
-Do not add verification steps unless the user explicitly asks.
+```bash
+chunktts INPUT.txt OUTPUT.opus
+```
 
-## Process TTS Input
+## Readiness
 
-Always rewrite the input yourself before running `chunktts`.
-
-- Do not use scripts or programmatic pipelines to generate the cleaned TTS input.
-  Read the source directly and rewrite it manually for speech.
-
-### Installation
-
-- Check for `chunktts` with `command -v chunktts`.
-- If it is missing, read [references/chunktts-install.md](references/chunktts-install.md) and attempt installation.
-- Check again after installation. If it is still missing, stop and report the failure.
-
-### Execution
-
-- Request unrestricted network or escalated execution directly in the tool call.
-  Do not run a sandboxed `chunktts` probe first.
-- Do not inspect environment variables, shell profiles, or filesystem files to discover API keys.
-  If `chunktts` reports an auth or config failure, report the error and ask the user to configure
-  `DEEPINFRA_API_KEY` or `config.json`, then retry.
-
-### Usage
-
-- Command form: `chunktts INPUT.txt OUTPUT.opus`
+- Run `chunktts --help`.
+- If `chunktts` is missing or fails to start, read
+  [references/chunktts-install.md](references/chunktts-install.md), install the
+  binary or missing runtime dependency, and retry.
+- After installing `chunktts`, tell the user how to configure
+  `DEEPINFRA_API_KEY` or `config.json` before generating audio.
+- Request unrestricted network or escalated execution directly when running
+  `chunktts`. Do not run a sandboxed network probe first.
+- Do not inspect environment variables, shell profiles, or filesystem files to
+  discover API keys. If authentication fails, ask the user to configure the
+  key, then retry.
 
 ## Rewrite for Speech
 
-Optimize for natural speech, not visual fidelity.
+Read the source directly and manually rewrite it for speech. Do not use a
+programmatic cleanup pipeline. Preserve the content while optimizing for
+listening rather than visual fidelity.
 
-- Remove markdown syntax such as `#`, `##`, `*`, `_`, `` ` ``, `>`, code fences,
-  table pipes, and horizontal rules, but keep the visible text.
+- Remove markdown syntax while keeping useful visible text.
 - Turn bullet points and numbered items into normal spoken sentences.
-- For markdown links, keep the visible link text and drop the raw URL target unless the URL itself matters.
-- Rewrite raw URLs into natural spoken form. Do not leave `http://`, `https://`,
-  query strings, fragments, or punctuation-heavy path syntax unless they must be spoken.
+- For markdown links, keep the visible text and drop the URL unless it matters.
+- Rewrite raw URLs, email addresses, paths, flags, and technical identifiers
+  into natural spoken forms. Avoid punctuation-heavy text.
 - Rewrite email addresses into forms like `name at domain dot com`.
-- Remove LaTeX delimiters such as `$`, `$$`, `\(`, `\)`, `\[`, and `\]`.
-- Rewrite common TeX or math notation into spoken words, such as:
-  - `\alpha` -> `alpha`
-  - `\beta` -> `beta`
-  - `=` -> `equals`
-  - `+` -> `plus`
-  - `-` -> `minus`
-  - `/` -> `over`
-  - `^2` -> `squared`
-  - `^3` -> `cubed`
-- Rewrite file paths, flags, and technical identifiers into more speakable text.
-  Avoid long runs of punctuation or symbols.
+- Remove LaTeX delimiters and speak common math notation, such as `\alpha` as
+  `alpha`, `=` as `equals`, `/` as `over`, and `^2` as `squared`.
 - Drop decorative or purely visual content that adds no spoken value.
 
 ## Chunking
 
-You decide where `<bk>` goes.
-
-- Chunk by spoken thought units, not by document structure.
-- Use whole paragraphs and list items as the default chunking units.
-- Do not insert `<bk>` after every sentence by default. Keep adjacent short sentences together when they form one spoken thought and still fit comfortably within the chunk size limits.
-- Treat headings as optional hints, not mandatory spoken content.
-- Drop generic headings that do not improve the listening experience.
-- Keep a heading only if it adds real spoken meaning and sounds natural aloud.
-- Prefer shorter spoken sentences for delivery, not less content. Do not summarize,
-  compress, or compact a passage to fit a chunk. If one sounds dense or awkward,
-  rewrite it into two shorter natural sentences before chunking.
+- Insert `<bk>` between spoken thought units. Use paragraphs and list items as
+  the default units; keep adjacent short sentences together when they form one
+  thought.
+- Keep headings only when they add spoken meaning.
+- Do not summarize or drop meaningful content to fit a chunk. Rewrite dense
+  sentences into shorter spoken sentences first.
 - If a paragraph or list item is too long, split it first at sentence boundaries.
 - Split inside a sentence only as a last resort.
-- Keep chunks conservative for Kokoro-82M:
-  - target about `260-420` characters
-  - preferred upper bound `520`
-  - hard ceiling `620`
-- Never emit empty chunks.
-- Collapse repeated `<bk>` markers.
+- Target `260-420` characters per chunk. Prefer at most `520`; never exceed
+  `620`.
+- Remove empty chunks and collapse repeated `<bk>` markers.
 
 ## Produce Output
 

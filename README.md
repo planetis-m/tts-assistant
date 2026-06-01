@@ -18,6 +18,9 @@ notation.
 ## Requirements
 
 - **`chunktts`**: Required to generate the final `.opus` file.
+- **Runtime libraries**: Linux requires `libcurl` and `libsndfile`; macOS
+  requires `curl` and `libsndfile`. Windows release archives bundle the
+  required DLLs.
 - **DeepInfra API Key**: Required by `chunktts`.
   - Set it via `DEEPINFRA_API_KEY` (recommended).
   - Or provide it via `config.json` next to the `chunktts` executable.
